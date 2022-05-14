@@ -1,5 +1,3 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
 import { ipcRenderer } from 'electron';
 import { reaction, observable, makeObservable } from 'mobx';
 import { DialogStore } from '~/models/dialog-store';

@@ -1,6 +1,10 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
-import { observable, computed, makeObservable, makeAutoObservable } from 'mobx';
+import {
+  observable,
+  computed,
+  makeObservable,
+  makeAutoObservable,
+  autorun,
+} from 'mobx';
 
 import { TabsStore } from './tabs';
 import { TabGroupsStore } from './tab-groups';
@@ -18,6 +22,7 @@ import { IBrowserAction } from '../models';
 import { NEWTAB_URL } from '~/constants/tabs';
 import { IURLSegment } from '~/interfaces/urls';
 import { BookmarkBarStore } from './bookmark-bar';
+import { NONMODAL_DIALOGS } from '~/constants';
 
 export class Store {
   public settings = new SettingsStore(this);
@@ -40,7 +45,7 @@ export class Store {
 
   public windowId = getCurrentWindow().id;
 
-  public barHideTimer = 0;
+  public barHideTimer: number | NodeJS.Timeout = 0;
 
   public isIncognito = ipcRenderer.sendSync(`is-incognito-${this.windowId}`);
 
@@ -89,7 +94,6 @@ export class Store {
   @observable
   public isDefaultBrowser = !this._isDefaultBrowser;
 
-
   public dialogsVisibility: { [key: string]: boolean } = {
     menu: false,
     'add-bookmark': false,
@@ -101,6 +105,12 @@ export class Store {
   };
 
   // Computed
+
+  public get modalOpen() {
+    return Object.entries(this.dialogsVisibility)
+      .filter(([key]) => !NONMODAL_DIALOGS.includes(key))
+      .some(([, open]) => open);
+  }
 
   public get downloadProgress() {
     const downloading = this.downloads.filter((x) => !x.completed);
@@ -145,7 +155,7 @@ export class Store {
 
     const url = this.addressbarValue;
 
-    const whitelistedProtocols = ['https', 'http', 'ftp', 'wexond'];
+    const whitelistedProtocols = ['https', 'http', 'ftp', 'fifo'];
 
     for (let i = 0; i < url.length; i++) {
       const protocol = whitelistedProtocols.find(
@@ -205,6 +215,7 @@ export class Store {
       isBookmarked: observable,
       zoomFactor: observable,
       dialogsVisibility: observable,
+      modalOpen: computed,
       addressbarUrlSegments: computed,
       addressbarValue: computed,
       theme: computed,
@@ -217,11 +228,6 @@ export class Store {
       this.navigationState = data;
     });
 
-    ipcRenderer.on("update-navigation-state-ui", (e, url) => {
-      var url = url.url
-      this.isUIpage = url.startsWith(WEBUI_BASE_URL) || url.startsWith(NETWORK_ERROR_HOST);
-    }) 
-
     ipcRenderer.on('fullscreen', (e, fullscreen: boolean) => {
       this.isFullscreen = fullscreen;
     });
@@ -233,10 +239,6 @@ export class Store {
     ipcRenderer.on('update-available', () => {
       this.updateAvailable = true;
     });
-
-    ipcRenderer.on('is-ui-page', (e, data) => {
-      this.isUIpage = data
-    })
 
     ipcRenderer.on('download-started', (e, item) => {
       this.downloads.push(item);

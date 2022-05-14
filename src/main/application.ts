@@ -1,5 +1,3 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
 import { app, ipcMain, Menu } from 'electron';
 import { isAbsolute, extname } from 'path';
 import { existsSync } from 'fs';

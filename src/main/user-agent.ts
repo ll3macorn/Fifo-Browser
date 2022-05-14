@@ -1,5 +1,3 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
 import { app } from 'electron';
 
 const REMOVE_CHROME_COMPONENT_PATTERNS = [

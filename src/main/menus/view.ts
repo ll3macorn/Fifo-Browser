@@ -1,5 +1,3 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
 import { AppWindow } from '../windows';
 import { clipboard, Menu } from 'electron';
 import { isURL, prefixHttp } from '~/utils';

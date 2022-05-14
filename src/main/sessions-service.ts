@@ -1,5 +1,3 @@
-/* Copyright (c) 2021-2022 SnailDOS */
-
 import { session, ipcMain } from 'electron';
 import { getPath, makeId } from '~/utils';
 import { promises, existsSync } from 'fs';
@@ -18,6 +16,7 @@ import { ElectronChromeExtensions } from 'electron-chrome-extensions';
 
 const rf = promisify(rimraf);
 
+// TODO: sessions should be separate.  This structure actually doesn't make sense.
 export class SessionsService {
   public view = session.fromPartition('persist:view');
   public viewIncognito = session.fromPartition('view_incognito');
