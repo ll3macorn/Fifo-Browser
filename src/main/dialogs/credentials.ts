@@ -1,15 +1,14 @@
 /* Copyright (c) 2021-2022 SnailDOS */
 
 import { VIEW_Y_OFFSET } from '~/constants/design';
-import { AppWindow } from '../windows';
-import { Dialog } from '.';
+import {PersistentDialog} from "~/main/dialogs/dialog";
 
 const WIDTH = 350;
 const HEIGHT = 271;
 
-export class CredentialsDialog extends Dialog {
-  public constructor(appWindow: AppWindow) {
-    super(appWindow, {
+export class CredentialsDialog extends PersistentDialog {
+  public constructor() {
+    super({
       name: 'credentials',
       bounds: {
         height: HEIGHT,
@@ -20,7 +19,7 @@ export class CredentialsDialog extends Dialog {
   }
 
   public rearrange() {
-    const { width } = this.appWindow.win.getContentBounds();
+    const { width } = this.browserWindow.getContentBounds();
     super.rearrange({
       x: width - WIDTH,
     });

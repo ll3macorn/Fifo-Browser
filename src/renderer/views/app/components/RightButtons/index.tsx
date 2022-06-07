@@ -18,6 +18,10 @@ import { SiteButtons } from '../SiteButtons';
 
 let menuRef: HTMLDivElement = null;
 
+const onAddTabClick = async () => {
+  await store.tabs.addTab();
+};
+
 const onDownloadsClick = async (e: React.MouseEvent<HTMLDivElement>) => {
   const { right, bottom } = e.currentTarget.getBoundingClientRect();
   store.downloadNotification = false;

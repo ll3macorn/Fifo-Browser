@@ -8,7 +8,8 @@ import { IHistoryItem } from '~/interfaces';
 import { ListItem } from '~/renderer/components/ListItem';
 import { formatTime } from '../../utils';
 import store from '../../store';
-import { ICON_PAGE } from '~/renderer/constants/icons';
+import { ICON_PAGE, ICON_TRASH } from '~/renderer/constants/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const onClick = (item: IHistoryItem) => () => {
   const index = store.selectedItems.indexOf(item._id);
@@ -37,9 +38,12 @@ export default observer(({ data }: { data: IHistoryItem }) => {
   let { favicon } = data;
   let customFavicon = false;
 
-  if (favicon == null || favicon.trim() === '') {
+  if (
+    favicon == null ||
+    (typeof favicon === 'string' && favicon.trim() === '')
+  ) {
     favicon = ICON_PAGE;
-  } else {
+  } else if (typeof data.favicon === 'string') {
     favicon = store.favicons.get(data.favicon);
     customFavicon = true;
   }

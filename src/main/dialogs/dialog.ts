@@ -78,13 +78,15 @@ export class PersistentDialog {
       }
     });
 
-    if (process.env.NODE_ENV === 'development') {
-      this.webContents.loadURL(`http://localhost:4444/${this.name}.html`);
-    } else {
-      this.webContents.loadURL(
-        join('file://', app.getAppPath(), `build/${this.name}.html`),
-      );
-    }
+    (async () => {
+      if (process.env.NODE_ENV === 'development') {
+        await this.webContents.loadURL(`http://localhost:4444/${this.name}.html`);
+      } else {
+        await this.webContents.loadURL(
+          join('file://', app.getAppPath(), `build/${this.name}.html`),
+        );
+      }
+    })()
   }
 
   public get webContents() {

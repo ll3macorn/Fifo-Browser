@@ -16,6 +16,7 @@ import {
   DEFAULT_TITLEBAR_HEIGHT,
   TOOLBAR_HEIGHT,
 } from '~/constants/design';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
   if (e.which === 13) {
@@ -31,7 +32,8 @@ const onKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
       if (suggestion.isSearch) {
         url = store.searchEngine.url.replace('%s', text);
       } else if (text.indexOf('://') === -1) {
-        url = `http://${text}`;
+        if (text.startsWith('localhost')) url = `http://${text}`;
+        else url = `https://${text}`;
       }
     }
 
@@ -84,7 +86,7 @@ const onInput = (e: any) => {
     selectionStart: store.inputRef.current.selectionStart,
     selectionEnd: store.inputRef.current.selectionEnd,
   });
-  
+
   if (e.currentTarget.value.trim() === '') {
     store.hide({ focus: true });
   }
@@ -110,7 +112,7 @@ export const App = observer(() => {
   });
 
   const suggestion = store.suggestions.selectedSuggestion;
-  let favicon = ICON_SEARCH;
+  let favicon: string | IconProp = ICON_SEARCH;
   let customIcon = true;
 
   if (suggestion && suggestionsVisible) {
@@ -121,7 +123,7 @@ export const App = observer(() => {
       favicon = store.searchEngine.icon;
     } else if (
       favicon == null ||
-      favicon.trim() === '' ||
+      (typeof favicon === 'string' && favicon.trim() === '') ||
       favicon === ICON_PAGE
     ) {
       favicon = ICON_PAGE;

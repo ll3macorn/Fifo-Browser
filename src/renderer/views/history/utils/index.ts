@@ -23,7 +23,7 @@ export const getSectionLabel = (date: Date) => {
     if (current.getDate() === date.getDate()) {
       prefix = 'Today - ';
     } else if (current.getDate() - 1 === date.getDate()) {
-      prefix = 'Yesturday - ';
+      prefix = 'Yesterday - ';
     }
   }
 

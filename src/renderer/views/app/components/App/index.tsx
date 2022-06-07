@@ -19,6 +19,7 @@ import {
   DEFAULT_TAB_HEIGHT,
 } from '~/constants/design';
 import { DefaultBrowser } from '../defaultBrowser';
+import { NONMODAL_DIALOGS } from '~/constants';
 
 const onAppLeave = () => {
   store.barHideTimer = setTimeout(function () {
@@ -35,7 +36,7 @@ const onAppLeave = () => {
 };
 
 const onAppEnter = () => {
-  clearTimeout(store.barHideTimer);
+  if (typeof store.barHideTimer !== 'number') clearTimeout(store.barHideTimer);
 };
 
 const onLineEnter = () => {

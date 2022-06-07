@@ -3,8 +3,9 @@
 import { BrowserWindow } from 'electron';
 import { Application } from '../application';
 import { DIALOG_MARGIN_TOP, DIALOG_MARGIN } from '~/constants/design';
+import {IDialog} from "~/main/services/dialogs-service";
 
-export const showExtensionDialog = (
+export const showExtensionDialog = async (
   browserWindow: BrowserWindow,
   x: number,
   y: number,
@@ -16,7 +17,7 @@ export const showExtensionDialog = (
   let height = 512;
   let width = 512;
 
-  const dialog = Application.instance.dialogs.show({
+  const dialog: IDialog = await Application.instance.dialogs.show({
     name: 'extension-popup',
     browserWindow,
     getBounds: () => {
@@ -41,8 +42,9 @@ export const showExtensionDialog = (
   dialog.browserView.webContents.on(
     'will-attach-webview',
     (e, webPreferences, params) => {
-      webPreferences.nodeIntegration = true;
-      webPreferences.contextIsolation = false;
+      webPreferences.sandbox = true;
+      webPreferences.nodeIntegration = false;
+      webPreferences.contextIsolation = true;
     },
   );
 

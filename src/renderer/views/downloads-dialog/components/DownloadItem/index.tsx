@@ -15,7 +15,9 @@ import {
 } from './style';
 import { IDownloadItem } from '~/interfaces';
 import prettyBytes = require('pretty-bytes');
-import { shell, remote } from 'electron';
+import { shell } from 'electron';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ICON_MORE, ICON_PAGE } from '~/renderer/constants/icons';
 
 const onClick = (item: IDownloadItem) => () => {
   if (item.completed) {

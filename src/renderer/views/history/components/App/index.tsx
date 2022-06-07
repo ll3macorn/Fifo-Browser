@@ -81,8 +81,8 @@ const onInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
   store.search(e.currentTarget.value);
 };
 
-const onClearClick = (e: React.MouseEvent<HTMLDivElement>) => {
-  e.stopPropagation();
+const onClearClick = () => {
+  store.clear();
 
   store.sections.map((data) =>
     data.items.map((item) => store.removeItems([item._id])),
@@ -98,7 +98,7 @@ export default observer(() => {
       <Container>
         <WebUIStyle />
         <GlobalNavigationDrawer></GlobalNavigationDrawer>
-        <NavigationDrawer title="Search History" search onSearchInput={onInput}>
+        <NavigationDrawer title="History" search onSearchInput={onInput}>
           <RangeItem icon={ICON_ALL} range="all">
             All
           </RangeItem>
@@ -109,14 +109,14 @@ export default observer(() => {
             Yesterday
           </RangeItem>
           <RangeItem icon={ICON_WEEK} range="last-week">
-            Last Week
+            Last week
           </RangeItem>
           <RangeItem icon={ICON_CALENDAR} range="older">
             Older
           </RangeItem>
           <div style={{ flex: 1 }} />
           <NavigationDrawer.Item icon={ICON_TRASH} onClick={onClearClick}>
-           Clear all history!
+            Clear Browsing Data
           </NavigationDrawer.Item>
         </NavigationDrawer>
         <Content onScroll={onScroll}>

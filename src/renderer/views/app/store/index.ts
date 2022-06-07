@@ -91,7 +91,6 @@ export class Store {
 
   public zoomFactor = 1;
 
-  @observable
   public isDefaultBrowser = !this._isDefaultBrowser;
 
   public dialogsVisibility: { [key: string]: boolean } = {
@@ -214,6 +213,7 @@ export class Store {
       downloads: observable,
       isBookmarked: observable,
       zoomFactor: observable,
+      isDefaultBrowser: observable,
       dialogsVisibility: observable,
       modalOpen: computed,
       addressbarUrlSegments: computed,

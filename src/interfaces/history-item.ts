@@ -1,11 +1,11 @@
-/* Copyright (c) 2021-2022 SnailDOS */
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface IHistoryItem {
   _id?: string;
   title?: string;
   url?: string;
   date?: number;
-  favicon?: string;
+  favicon?: string | IconProp;
   hovered?: boolean;
 }
 

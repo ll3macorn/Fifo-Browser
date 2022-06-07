@@ -5,7 +5,6 @@ import { ISettings, ITheme, IVisitedItem } from '~/interfaces';
 import { getTheme } from '~/utils/themes';
 import { INewsItem } from '~/interfaces/news-item';
 import { networkMainChannel } from '~/common/rpc/network';
-import { ipcRenderer } from 'electron';
 import { NEWS_API_KEY } from '../../app/constants';
 
 type NewsBehavior = 'on-scroll' | 'always-visible' | 'hidden';
@@ -90,9 +89,7 @@ export class Store {
     return this._preset;
   }
 
-  public winId = ipcRenderer.sendSync('get-window-id');
-
-  public isIncognito = ipcRenderer.sendSync(`is-incognito-${this.winId}`);
+  public isIncognito = 0;
 
   // eslint-disable-next-line @typescript-eslint/adjacent-overload-signatures
   public set preset(value: Preset) {

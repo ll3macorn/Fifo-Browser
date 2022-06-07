@@ -39,7 +39,7 @@ const onClick = (suggestion: ISuggestion) => () => {
   if (suggestion.isSearch) {
     url = store.searchEngine.url.replace('%s', url);
   } else if (url.indexOf('://') === -1) {
-    url = `http://${url}`;
+    url = `https://${url}`;
   }
 
   callViewMethod(store.tabId, 'loadURL', url);
@@ -72,7 +72,7 @@ export const Suggestion = observer(({ suggestion }: Props) => {
       onMouseEnter={onMouseEnter(suggestion)}
       onMouseLeave={onMouseLeave(suggestion)}
     >
-{typeof favicon === 'string' ? (
+      {typeof favicon === 'string' ? (
         <Icon
           style={{
             backgroundImage: `url(${favicon})`,

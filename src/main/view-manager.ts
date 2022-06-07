@@ -50,31 +50,6 @@ export class ViewManager extends EventEmitter {
       this.create(details);
     });
 
-    ipcMain.on('create-tab-menu-extra', (e, details: any) => {
-      this.create(details);
-    });
-
-    ipcMain.on('save-as-menu-extra', async (e) => {
-      const {
-        title,
-        webContents,
-      } = Application.instance.windows.current.viewManager.selected;
-    
-      const { canceled, filePath } = await dialog.showSaveDialog({
-        defaultPath: title,
-        filters: [
-          { name: 'Webpage, Complete', extensions: ['html', 'htm'] },
-          { name: 'Webpage, HTML Only', extensions: ['htm', 'html'] },
-        ],
-      });
-    
-      if (canceled) return;
-    
-      const ext = extname(filePath);
-    
-      webContents.savePage(filePath, ext === '.htm' ? 'HTMLOnly' : 'HTMLComplete');
-    });
-
     ipcMain.on('Print', () => {
       this.selected.webContents.print();
     });

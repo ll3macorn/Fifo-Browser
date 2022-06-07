@@ -4,14 +4,13 @@ import * as React from 'react';
 import { observer } from 'mobx-react-lite';
 import { ThemeProvider } from 'styled-components';
 
-import { StyledApp, Title, Row, Label, Buttons } from './style';
+import { StyledApp, Title, Row, Label, Buttons, Col, Select } from './style';
 import store from '../../store';
 import { Input, Dropdown } from '~/renderer/components/Input';
 import { Button } from '~/renderer/components/Button';
 import { ipcRenderer } from 'electron';
 import { getBookmarkTitle } from '~/renderer/views/bookmarks/utils';
 import { UIStyle } from '~/renderer/mixins/default-styles';
-import * as remote from '@electron/remote';
 
 const onDone = () => {
   store.hide();
@@ -23,6 +22,8 @@ const updateBookmark = () => {
 };
 
 const onChange = () => {
+  if (!store.bookmark) return;
+
   store.bookmark.title = store.titleRef.current.value;
   updateBookmark();
 };

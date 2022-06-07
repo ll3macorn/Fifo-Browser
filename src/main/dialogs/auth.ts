@@ -9,7 +9,7 @@ export const requestAuth = (
   url: string,
   tabId: number,
 ): Promise<{ username: string; password: string }> => {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve) => {
     const appWindow = Application.instance.windows.fromBrowserWindow(
       browserWindow,
     );
@@ -17,7 +17,7 @@ export const requestAuth = (
     const tab = appWindow.viewManager.views.get(tabId);
     tab.requestedAuth = { url };
 
-    const dialog = Application.instance.dialogs.show({
+    const dialog = await Application.instance.dialogs.show({
       name: 'auth',
       browserWindow,
       getBounds: () => {

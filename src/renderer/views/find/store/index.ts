@@ -3,7 +3,7 @@
 import * as React from 'react';
 
 import { makeObservable, observable } from 'mobx';
-import { ipcRenderer, shell } from 'electron';
+import { ipcRenderer } from 'electron';
 import { DialogStore } from '~/models/dialog-store';
 import { callViewMethod } from '~/utils/view';
 
