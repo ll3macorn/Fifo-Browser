@@ -34,6 +34,9 @@ jobs:
 
       - name: build for mac
         run: electron-builder
+        allow_failure: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
 
       - name: Done
@@ -43,4 +46,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with: 
           name: assets-for-download
-          path: ./dist
+          path: ./dist/mac-universal
