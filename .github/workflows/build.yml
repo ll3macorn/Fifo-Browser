@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        os: [ubuntu-latest]
+        os: [macos-latest]
 
     steps:
       - name: Check out Git repository
@@ -26,7 +26,6 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
         env:
-          ADBLOCK: true
 
       - name: Get commit message
         run: echo "::set-output name=message::$(git log --no-merges -1 --oneline)"
