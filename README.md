@@ -1,3 +1,7 @@
+**MAC BUILD IS IN GITHUB ACTIONS ARTIFACTS!**
+
+
+
 <p align="center">
   <a href="https://fifo.snaildos.com"><img src="https://github.com/snaildos/Fifo-Browser/blob/main/static/icons/icon.png" width="256"></a>
 </p>
