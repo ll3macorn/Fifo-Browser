@@ -34,7 +34,6 @@ jobs:
 
       - name: build for mac
         run: electron-builder
-        allow_failure: true
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
