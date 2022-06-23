@@ -1,7 +1,4 @@
 name: Test
-name: release
-  uses: actions/create-release@v1
-  id: create_release
 
 on: [push, pull_request]
 
@@ -14,6 +11,7 @@ jobs:
         os: [macos-latest]
 
     steps:
+    
       - name: Check out Git repository
         uses: actions/checkout@v2
 
@@ -38,3 +36,25 @@ jobs:
 
       - name: Done
         run: echo Done.
+
+      - name: release
+        uses: actions/create-release@v1
+        id: create_release
+        with:
+          draft: false
+          prerelease: false
+          release_name: ${{ steps.version.outputs.version }}
+          tag_name: ${{ github.ref }}
+          body_path: CHANGELOG.md
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: upload darwin artifact
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/*.zip
+          asset_name: release.zip
+          asset_content_type: application/zip
