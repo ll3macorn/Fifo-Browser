@@ -16,7 +16,7 @@ jobs:
         with:
           certificate-data: ${{ secrets.DEVELOPMENT_CERTIFICATE_DATA }}
           certificate-passphrase: ${{ secrets.DEVELOPMENT_CERTIFICATE_PASSPHRASE }}
-          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }
+          keychain-password: ${{ secrets.KEYCHAIN_PASSWORD }}
 
       - name: Check out Git repository
         uses: actions/checkout@v2
