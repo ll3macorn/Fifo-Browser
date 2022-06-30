@@ -40,7 +40,7 @@ jobs:
         run: yarn run build
 
       - name: build for mac
-        run: electron-builder
+        run: electron-builder --no-deref-symlinks
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
